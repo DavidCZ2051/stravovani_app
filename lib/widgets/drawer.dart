@@ -1,6 +1,9 @@
 // packages
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'dart:io';
+// files
+import 'package:stravovani_app/globals.dart' as globals;
 
 class MyDrawer extends StatefulWidget {
   const MyDrawer({super.key});
@@ -53,6 +56,14 @@ class _MyDrawerState extends State<MyDrawer> {
               context.go("/alergeny");
             },
           ),
+          if (Platform.isAndroid || globals.debug)
+            ListTile(
+              leading: const Icon(Icons.nfc),
+              title: const Text("Mobilní karta"),
+              onTap: () {
+                context.go("/hce");
+              },
+            ),
         ],
       ),
     );

@@ -6,6 +6,7 @@ import 'globals.dart' as globals;
 // routes
 import 'package:stravovani_app/routes/menu.dart';
 import 'package:stravovani_app/routes/allergens.dart';
+import 'package:stravovani_app/routes/hce.dart';
 
 void main() {
   runApp(const App());
@@ -21,6 +22,10 @@ final router = GoRouter(
     GoRoute(
       path: "/alergeny",
       builder: (context, state) => const AllergensScreen(),
+    ),
+    GoRoute(
+      path: "/hce",
+      builder: (context, state) => const HceScreen(),
     ),
   ],
 );

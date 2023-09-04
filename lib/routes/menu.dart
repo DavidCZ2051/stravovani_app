@@ -44,6 +44,9 @@ class _MenuScreenState extends State<MenuScreen> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              const Divider(
+                                color: Colors.black38,
+                              ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 30),
                                 child: Text(
@@ -53,16 +56,31 @@ class _MenuScreenState extends State<MenuScreen> {
                               ),
                               RadioListTile(
                                 value: 0,
-                                groupValue: 0,
-                                onChanged: (value) {},
-                                title: const Text("Neobjednáno"),
+                                groupValue: foodType.selectedFood,
+                                onChanged: (value) {
+                                  setState(() {
+                                    foodType.selectedFood = value as int;
+                                  });
+                                },
+                                title: const Text(
+                                  "Neobjednáno",
+                                  style: TextStyle(
+                                    fontStyle: FontStyle.italic,
+                                    fontSize: 17,
+                                  ),
+                                ),
                               ),
                               for (Food food in foodType.foods)
                                 RadioListTile(
-                                  value: 0,
-                                  groupValue: 0,
-                                  onChanged: (value) {},
-                                  title: Text(food.name),
+                                  value: food.number,
+                                  groupValue: foodType.selectedFood,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      foodType.selectedFood = value as int;
+                                    });
+                                  },
+                                  title: Text(
+                                      "${food.name} ${food.allergensString}"),
                                 ),
                             ],
                           ),

@@ -50,16 +50,27 @@ enum Allergens {
 }
 
 class Food {
+  int number;
   String name;
   List<Allergens>? allergens;
-  Food(this.name, {this.allergens});
+
+  String get allergensString {
+    if (allergens == null) return "";
+
+    return "A: ${allergens!.map((e) => e.number).join(", ")}";
+  }
+
+  Food(this.name, this.number, {this.allergens});
 }
 
 class FoodType {
+  int number;
   String name;
   List<Food> foods;
+  int selectedFood;
 
-  FoodType(this.name, {required this.foods});
+  FoodType(this.name, this.number,
+      {required this.foods, required this.selectedFood});
 }
 
 class Day {
@@ -71,25 +82,31 @@ class Day {
 
 List<Day> menu = [
   Day(
-    "Pondělí",
+    "Úterý",
     foodTypes: [
       FoodType(
         "Snídaně",
+        0,
         foods: [
           Food(
             "Houska, sýrová houska, chléb z kamenné pece, máslo, nutella, budapešťská pomazánka, salám, ovocný jogurt",
+            1,
           ),
         ],
+        selectedFood: 1,
       ),
       FoodType(
         "Oběd",
+        1,
         foods: [
           Food(
             "Mexický guláš z hovězího masa sypaný sýrem, petrželková rýže",
+            1,
             allergens: [Allergens.gluten, Allergens.eggs, Allergens.milk],
           ),
           Food(
             "Řecký salát s olivami a balkánským sýrem, selský rohlík",
+            2,
             allergens: [
               Allergens.gluten,
               Allergens.eggs,
@@ -99,15 +116,19 @@ List<Day> menu = [
             ],
           ),
         ],
+        selectedFood: 2,
       ),
       FoodType(
         "Večeře",
+        2,
         foods: [
           Food(
             "Špecle s anglickou slaninou a kysaným zelím, ovoce",
+            1,
             allergens: [Allergens.gluten, Allergens.eggs, Allergens.milk],
           ),
         ],
+        selectedFood: 0,
       ),
     ],
   ),
