@@ -1,3 +1,15 @@
+class User {
+  String name;
+  int credit;
+  List<Allergens> unwantedAllergens;
+
+  User({
+    required this.name,
+    required this.credit,
+    required this.unwantedAllergens,
+  });
+}
+
 enum Allergens {
   // Alergeny seřazeny podle dokumentu EU 32011R1169
   gluten,
@@ -54,13 +66,27 @@ class Food {
   String name;
   List<Allergens>? allergens;
 
+  Food(
+    this.name,
+    this.number, {
+    this.allergens,
+  });
+
   String get allergensString {
     if (allergens == null) return "";
 
     return "A: ${allergens!.map((e) => e.number).join(", ")}";
   }
 
-  Food(this.name, this.number, {this.allergens});
+  bool containsUsersUnwantedAllergens(User user) {
+    if (allergens == null) return false;
+
+    for (Allergens allergen in allergens!) {
+      if (user.unwantedAllergens.contains(allergen)) return true;
+    }
+
+    return false;
+  }
 }
 
 class FoodType {
@@ -69,20 +95,80 @@ class FoodType {
   List<Food> foods;
   int selectedFood;
 
-  FoodType(this.name, this.number,
-      {required this.foods, required this.selectedFood});
+  FoodType(
+    this.name,
+    this.number, {
+    required this.foods,
+    required this.selectedFood,
+  });
 }
 
 class Day {
   String name;
   List<FoodType> foodTypes;
+  bool canBeChanged;
 
-  Day(this.name, {required this.foodTypes});
+  Day(
+    this.name, {
+    required this.foodTypes,
+    required this.canBeChanged,
+  });
 }
 
 List<Day> menu = [
   Day(
-    "Úterý",
+    "Pondělí 9.10.2023",
+    foodTypes: [
+      FoodType(
+        "Snídaně",
+        0,
+        foods: [
+          Food(
+            "Houska, sýrová houska, chléb z kamenné pece, máslo, nutella, budapešťská pomazánka, salám, ovocný jogurt",
+            1,
+          ),
+        ],
+        selectedFood: 0,
+      ),
+      FoodType(
+        "Oběd",
+        1,
+        foods: [
+          Food(
+            "Kuřecí steak s bylinkovou omáčkou, bramborová kaše",
+            1,
+            allergens: [Allergens.gluten, Allergens.eggs, Allergens.milk],
+          ),
+          Food(
+            "Zapečené těstoviny s rajčatovou omáčkou, sýr",
+            2,
+            allergens: [Allergens.gluten, Allergens.eggs, Allergens.milk],
+          ),
+        ],
+        selectedFood: 2,
+      ),
+      FoodType(
+        "Večeře",
+        2,
+        foods: [
+          Food(
+            "Palačinky se švestkovou marmeládou",
+            1,
+            allergens: [
+              Allergens.gluten,
+              Allergens.eggs,
+              Allergens.milk,
+              Allergens.sesameSeeds
+            ],
+          ),
+        ],
+        selectedFood: 1,
+      ),
+    ],
+    canBeChanged: false,
+  ),
+  Day(
+    "Úterý 10.10.2023",
     foodTypes: [
       FoodType(
         "Snídaně",
@@ -131,5 +217,57 @@ List<Day> menu = [
         selectedFood: 0,
       ),
     ],
+    canBeChanged: true,
+  ),
+  Day(
+    "Středa 11.10.2023",
+    foodTypes: [
+      FoodType(
+        "Snídaně",
+        0,
+        foods: [
+          Food(
+            "Houska, sýrová houska, chléb z kamenné pece, máslo, nutella, budapešťská pomazánka, salám, ovocný jogurt",
+            1,
+          ),
+        ],
+        selectedFood: 1,
+      ),
+      FoodType(
+        "Oběd",
+        1,
+        foods: [
+          Food(
+            "Kuřecí steak s bylinkovou omáčkou, bramborová kaše",
+            1,
+            allergens: [Allergens.gluten, Allergens.eggs, Allergens.milk],
+          ),
+          Food(
+            "Zapečené těstoviny s rajčatovou omáčkou, sýr",
+            2,
+            allergens: [Allergens.gluten, Allergens.eggs, Allergens.milk],
+          ),
+        ],
+        selectedFood: 2,
+      ),
+      FoodType(
+        "Večeře",
+        2,
+        foods: [
+          Food(
+            "Kuřecí steak s bylinkovou omáčkou, bramborová kaše",
+            1,
+            allergens: [Allergens.gluten, Allergens.eggs, Allergens.milk],
+          ),
+          Food(
+            "Zapečené těstoviny s rajčatovou omáčkou, sýr",
+            2,
+            allergens: [Allergens.gluten, Allergens.eggs, Allergens.milk],
+          ),
+        ],
+        selectedFood: 0,
+      ),
+    ],
+    canBeChanged: true,
   ),
 ];
