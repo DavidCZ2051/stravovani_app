@@ -201,7 +201,10 @@ class _DayWidgetState extends State<DayWidget> {
                                 )
                               : null,
                         ),
-                        subtitle: Text(food.allergensString),
+                        // TODO: Color unwanted allergens
+                        subtitle: food.allergens == null
+                            ? Container()
+                            : Text(food.allergensString),
                         isThreeLine: true,
                         secondary:
                             food.containsUsersUnwantedAllergens(globals.user)
