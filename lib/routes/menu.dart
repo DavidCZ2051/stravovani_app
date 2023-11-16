@@ -117,6 +117,9 @@ class _DayWidgetState extends State<DayWidget> {
     );
   }
 
+  // TODO: Darker selected foods
+  // TODO: Miligrams of food (mg)
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -178,63 +181,69 @@ class _DayWidgetState extends State<DayWidget> {
                         : null,
                   ),
                   for (Food food in foodType.foods)
-                    InkWell(
-                      borderRadius: BorderRadius.circular(10),
-                      onLongPress: () {
-                        showFoodInfo(food);
-                      },
-                      child: RadioListTile(
-                        value: food.number,
-                        groupValue: foodType.selectedFood,
-                        onChanged: widget.day.canBeChanged
-                            ? (value) {
-                                setState(() {
-                                  foodType.selectedFood = value as int;
-                                });
-                              }
-                            : null,
-                        title: Text(
-                          food.name,
-                          style: foodType.selectedFood == food.number
-                              ? const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                )
+                    Padding(
+                      padding: const EdgeInsets.only(top: 5),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(10),
+                        onLongPress: () {
+                          showFoodInfo(food);
+                        },
+                        child: RadioListTile(
+                          value: food.number,
+                          groupValue: foodType.selectedFood,
+                          onChanged: widget.day.canBeChanged
+                              ? (value) {
+                                  setState(() {
+                                    foodType.selectedFood = value as int;
+                                  });
+                                }
                               : null,
-                        ),
-                        // TODO: Color unwanted allergens
-                        subtitle: food.allergens == null
-                            ? Container()
-                            : Text(food.allergensString),
-                        isThreeLine: true,
-                        secondary:
-                            food.containsUsersUnwantedAllergens(globals.user)
-                                ? const Tooltip(
-                                    message:
-                                        "Toto jídlo obsahuje alergeny, na které máte alergii.",
-                                    triggerMode: TooltipTriggerMode.tap,
-                                    child: Icon(
-                                      Icons.warning_amber,
-                                      color: Colors.orange,
-                                    ),
+                          title: Text(
+                            food.name,
+                            style: foodType.selectedFood == food.number
+                                ? const TextStyle(
+                                    fontWeight: FontWeight.bold,
                                   )
                                 : null,
-                        tileColor: foodType.selectedFood == food.number
-                            ? food.containsUsersUnwantedAllergens(globals.user)
-                                ? Theme.of(context).brightness ==
-                                        Brightness.dark
-                                    ? Colors.orange[700]!.withOpacity(0.25)
-                                    : Colors.orange[100]
-                                : Theme.of(context).highlightColor.withOpacity(
-                                      Theme.of(context).brightness ==
-                                              Brightness.dark
-                                          ? 0.05
-                                          : 0.2,
+                          ),
+
+                          // TODO: Color unwanted allergens
+                          subtitle: food.allergens == null
+                              ? null
+                              : Text(food.allergensString),
+                          secondary:
+                              food.containsUsersUnwantedAllergens(globals.user)
+                                  ? const Tooltip(
+                                      message:
+                                          "Toto jídlo obsahuje alergeny, na které máte alergii.",
+                                      triggerMode: TooltipTriggerMode.tap,
+                                      child: Icon(
+                                        Icons.warning_amber,
+                                        color: Colors.orange,
+                                      ),
                                     )
-                            : null,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                                  : null,
+                          tileColor: foodType.selectedFood == food.number
+                              ? food.containsUsersUnwantedAllergens(
+                                      globals.user)
+                                  ? Theme.of(context).brightness ==
+                                          Brightness.dark
+                                      ? Colors.orange[700]!.withOpacity(0.25)
+                                      : Colors.orange[100]
+                                  : Theme.of(context)
+                                      .highlightColor
+                                      .withOpacity(
+                                        Theme.of(context).brightness ==
+                                                Brightness.dark
+                                            ? 0.05
+                                            : 0.2,
+                                      )
+                              : null,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          visualDensity: VisualDensity.compact,
                         ),
-                        visualDensity: VisualDensity.compact,
                       ),
                     ),
                 ],
