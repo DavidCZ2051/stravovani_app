@@ -30,14 +30,14 @@ class _MyDrawerState extends State<MyDrawer> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    globals.user.name,
+                    "${globals.user!.firstName} ${globals.user!.lastName}",
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 24,
                     ),
                   ),
                   Text(
-                    "Kredit: ${globals.user.credit} Kč",
+                    "Kredit: ${globals.user!.credit} Kč",
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 18,

@@ -1,12 +1,20 @@
 class User {
-  String name;
-  int credit;
-  List<Allergens> unwantedAllergens;
+  String id;
+  String firstName;
+  String lastName;
+  String token;
+  String email;
+  String phone;
+  int credit = 0;
+  List<Allergens> unwantedAllergens = [];
 
   User({
-    required this.name,
-    required this.credit,
-    required this.unwantedAllergens,
+    required this.id,
+    required this.firstName,
+    required this.lastName,
+    required this.token,
+    required this.email,
+    required this.phone,
   });
 }
 

@@ -16,24 +16,26 @@ class MenuScreen extends StatefulWidget {
 class _MenuScreenState extends State<MenuScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: const MyDrawer(),
-      appBar: AppBar(
-        title: const Text("Stravování"),
-      ),
-      body: RefreshIndicator(
-        onRefresh: () async {
-          // TODO: refresh the menu
-        },
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              for (Day day in menu)
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: DayWidget(day: day),
-                ),
-            ],
+    return SafeArea(
+      child: Scaffold(
+        drawer: const MyDrawer(),
+        appBar: AppBar(
+          title: const Text("Stravování"),
+        ),
+        body: RefreshIndicator(
+          onRefresh: () async {
+            // TODO: refresh the menu
+          },
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                for (Day day in menu)
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: DayWidget(day: day),
+                  ),
+              ],
+            ),
           ),
         ),
       ),
@@ -212,7 +214,7 @@ class _DayWidgetState extends State<DayWidget> {
                               ? null
                               : Text(food.allergensString),
                           secondary:
-                              food.containsUsersUnwantedAllergens(globals.user)
+                              food.containsUsersUnwantedAllergens(globals.user!)
                                   ? const Tooltip(
                                       message:
                                           "Toto jídlo obsahuje alergeny, na které máte alergii.",
@@ -225,7 +227,7 @@ class _DayWidgetState extends State<DayWidget> {
                                   : null,
                           tileColor: foodType.selectedFood == food.number
                               ? food.containsUsersUnwantedAllergens(
-                                      globals.user)
+                                      globals.user!)
                                   ? Theme.of(context).brightness ==
                                           Brightness.dark
                                       ? Colors.orange[700]!.withOpacity(0.25)

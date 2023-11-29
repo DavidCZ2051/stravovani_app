@@ -7,6 +7,9 @@ import 'globals.dart' as globals;
 import 'package:stravovani_app/routes/menu.dart';
 import 'package:stravovani_app/routes/allergens.dart';
 import 'package:stravovani_app/routes/hce.dart';
+import 'package:stravovani_app/routes/login.dart';
+import 'package:stravovani_app/routes/initialize.dart';
+import 'package:stravovani_app/routes/load.dart';
 
 void main() {
   runApp(const App());
@@ -17,6 +20,20 @@ final router = GoRouter(
   routes: [
     GoRoute(
       path: "/",
+      builder: (context, state) => const InitializeScreen(),
+    ),
+    GoRoute(
+      path: "/login",
+      builder: (context, state) => const LoginScreen(),
+    ),
+    GoRoute(
+      path: "/load:type",
+      builder: (context, state) => LoadScreen(
+        loadType: state.pathParameters["type"]!.replaceAll(":type=", ""),
+      ),
+    ),
+    GoRoute(
+      path: "/menu",
       builder: (context, state) => const MenuScreen(),
     ),
     GoRoute(
