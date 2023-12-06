@@ -30,6 +30,7 @@ final router = GoRouter(
       path: "/load:type",
       builder: (context, state) => LoadScreen(
         loadType: state.pathParameters["type"]!.replaceAll(":type=", ""),
+        extra: state.extra as Map<String, dynamic>?,
       ),
     ),
     GoRoute(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 // files
 import 'package:stravovani_app/functions.dart';
+import 'package:stravovani_app/api/authentication.dart';
 
 class InitializeScreen extends StatefulWidget {
   const InitializeScreen({super.key});
@@ -21,14 +22,18 @@ class _InitializeScreenState extends State<InitializeScreen> {
   void authenticate() async {
     final token = await getTokenFromStorage();
 
-    print(token);
+    print("Loaded token: $token");
 
     if (token == null) {
       if (!mounted) return;
       context.go("/login");
     } else {
-      if (!mounted) return;
-      context.go("/menu");
+      if (await validateToken(token)) {
+        if (!mounted) return;
+        context.go("/menu");
+      } else {
+        // TODO: Token has expired, get a new one in the background
+      }
     }
   }
 

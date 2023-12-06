@@ -16,6 +16,7 @@ Future<(int, Map?)> getUser({
   );
 
   if (response.statusCode == 200) {
+    print(response.body);
     return (200, jsonDecode(response.body) as Map);
   } else {
     throw Exception("Failed to get user");

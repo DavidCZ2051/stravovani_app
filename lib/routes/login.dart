@@ -4,8 +4,6 @@ import 'package:go_router/go_router.dart';
 // files
 import 'package:stravovani_app/api/authentication.dart';
 import 'package:stravovani_app/functions.dart';
-import 'package:stravovani_app/globals.dart' as globals;
-import 'package:stravovani_app/classes.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -36,16 +34,20 @@ class _LoginScreenState extends State<LoginScreen> {
         // load user
         if (!mounted) return;
         context.go("/load:type=user", extra: {
-          "userId": json["userId"],
+          "user": json["user"],
           "token": json["token"],
         });
       } else if (response.$1 == 401) {
+        // TODO: Zlepšit
+        if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text("Špatné uživatelské jméno nebo heslo"),
           ),
         );
       } else {
+        // TODO: Zlepšit
+        if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text("Nepodařilo se přihlásit"),

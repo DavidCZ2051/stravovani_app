@@ -4,8 +4,10 @@ import 'package:http/http.dart';
 // files
 import 'package:stravovani_app/globals.dart';
 
-Future<(int, Map?)> login(
-    {required String username, required String password}) async {
+Future<(int, Map?)> login({
+  required String username,
+  required String password,
+}) async {
   final response = await post(
     Uri.parse("$apiURL/login"),
     headers: <String, String>{
@@ -24,4 +26,18 @@ Future<(int, Map?)> login(
   } else {
     throw Exception("Failed to login");
   }
+}
+
+Future<bool> validateToken(String token) async {
+  final response = await get(
+    Uri.parse("$apiURL/validate-token"),
+    headers: <String, String>{
+      "Authorization": "Bearer $token",
+    },
+  );
+
+  return {
+    200: true,
+    401: false,
+  }[response.statusCode]!;
 }
