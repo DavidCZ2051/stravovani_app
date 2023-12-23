@@ -17,14 +17,17 @@ class LoadScreen extends StatefulWidget {
 }
 
 class _LoadScreenState extends State<LoadScreen> {
+  late String loadType;
+
   @override
   void initState() {
     super.initState();
+    loadType = widget.loadType;
     selectLoadType();
   }
 
   void selectLoadType() {
-    if (widget.loadType == "user") {
+    if (loadType == "user") {
       loadUser();
     }
   }
@@ -46,12 +49,14 @@ class _LoadScreenState extends State<LoadScreen> {
       token: widget.extra!["token"],
     );
 
-    // here load menu etc...
-    context.go("/home");
+    loadMenu(token: globals.user!.token);
   }
+
+  void loadMenu({required String token}) async {}
 
   Map<String, String> texts = {
     "user": "Načítání uživatele...",
+    "menu": "Načítání menu...",
   };
 
   @override
@@ -63,7 +68,7 @@ class _LoadScreenState extends State<LoadScreen> {
             child: Column(
               children: [
                 const CircularProgressIndicator(),
-                Text(texts[widget.loadType] ?? "Načítání..."),
+                Text(texts[loadType] ?? "Načítání..."),
               ],
             ),
           ),
